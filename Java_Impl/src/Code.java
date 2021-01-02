@@ -95,6 +95,7 @@ public class Code {
     String directory = "";
     if (list.length == 0) {
       directory = "/";
+      
     } else {
       directory = "/" + list[list.length - 1];
     }

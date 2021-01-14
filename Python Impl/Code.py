@@ -11,7 +11,6 @@ class Commandline(object):
     The constructor instantiates an object of the code class with the current directory as one of
     the parameters.
     """
-
     def __init__(self, directory):
         if directory is None or directory == "":
             raise Exception("invalid current directory")
@@ -32,13 +31,15 @@ class Commandline(object):
             return self.new_directory
         c_string = self._set_new_directory(c_string)
         lst = c_string.split('/') if '/' in c_string else ["", c_string]
-        for i in range(1, len(lst)):
+        for i in range(0, len(lst)):
+            if i == 0 and lst[i] == "":
+                continue
             function = self.map.get(lst[i])
             if function:
                 function()
             else:
                 if not lst[i].isalnum():
-                    raise Exception("No such file or Directory")
+                    return "No such file or directory"
                 self.process_directory(lst[i])
         return self.new_directory
 
@@ -77,8 +78,6 @@ class Commandline(object):
 
 
 if __name__ == "__main__":
-    current_directory = ""
-    command_string = ""
     current_directory = sys.argv[1]
     command_string = sys.argv[2]
     command = Commandline(current_directory)

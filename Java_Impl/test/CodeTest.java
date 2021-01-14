@@ -56,18 +56,18 @@ public class CodeTest {
     assertEquals(newDirectory, "/");
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void process7() {
     String cString = "..klm";
     String newDirectory = code.process(cString);
-    assertEquals(newDirectory, "/abc");
+    assertEquals("No such file or directory", newDirectory);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void process8() {
     String cString = "....";
     String newDirectory = code.process(cString);
-    assertEquals(newDirectory, "");
+    assertEquals("No such file or directory", newDirectory);
   }
 
   @Test
@@ -105,11 +105,11 @@ public class CodeTest {
     assertEquals(newDirectory, "/abc/klm");
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void process14() {
     String cString = "...";
     String newDirectory = code.process(cString);
-    assertEquals(newDirectory, "");
+    assertEquals("No such file or directory", newDirectory);
   }
 
   @Test
@@ -117,6 +117,13 @@ public class CodeTest {
     String cString = "../gh///../klm/../.";
     String newDirectory = code.process(cString);
     assertEquals(newDirectory, "/abc/");
+  }
+
+  @Test
+  public void process16() {
+    String cString = "ijk/";
+    String newDirectory = code.process(cString);
+    assertEquals(newDirectory, "/abc/def/ijk");
   }
 
 }

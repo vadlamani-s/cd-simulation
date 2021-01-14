@@ -47,12 +47,15 @@ public class Code {
     cString = setNewDirectory(cString);
     String[] temp = new String[]{"", cString};
     String[] list = cString.contains("/") ? cString.split("/") : temp;
-    for (int i = 1; i < list.length; i++) {
+    for (int i = 0; i < list.length; i++) {
+      if (i == 0 && list[i].equals("")) {
+        continue;
+      }
       if (map.containsKey(list[i])) {
         map.get(list[i]).run();
       } else {
         if (!(list[i].matches("[a-zA-Z0-9]*"))) {
-          throw new IllegalArgumentException("No such file or Directory exists");
+          return "No such file or directory";
         }
         this.processDirectory(list[i]);
       }
@@ -83,16 +86,16 @@ public class Code {
 
 
   private void processEmpty() {
-    return;
+
   }
 
   private void processPeriod() {
-    return;
+
   }
 
   private void processParent() {
     String[] list = this.newDirectory.split("/");
-    String directory = "";
+    String directory;
     if (list.length == 0) {
       directory = "/";
     } else {
@@ -113,10 +116,8 @@ public class Code {
   }
 
   public static void main(String[] args) {
-    String currentDirectory = "";
-    String commandString = "";
-    currentDirectory = args[0];
-    commandString = args[1];
+    String currentDirectory = args[0];
+    String commandString = args[1];
     Code code = new Code(currentDirectory);
     System.out.println(code.process(commandString));
   }
